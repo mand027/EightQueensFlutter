@@ -43,6 +43,7 @@ class _ProblemSolverState extends State<ProblemSolver> {
     });
   }
 
+  /* Queens Solution based on code by Princi Singh in https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/ */
   void SolveQueensStart() {
 
     if (solveQueensRecursive(board, 0) == false)
@@ -149,8 +150,13 @@ class _ProblemSolverState extends State<ProblemSolver> {
     return GestureDetector(
       child: GridTile(
         child: Container(
-          decoration: BoxDecoration(
-            color: index%2 != 0 ? Colors.black : Colors.white,
+          decoration: N%2 == 0 ?
+          BoxDecoration(
+              color: (x%2 != 0 && y%2 != 0) || (x%2 == 0 && y%2 == 0)  ? Colors.teal : Colors.white,
+              border: Border.all(color: Colors.black, width: 0.5)
+          ) :
+          BoxDecoration(
+              color: index%2 == 0 ? Colors.teal : Colors.white,
               border: Border.all(color: Colors.black, width: 0.5)
           ),
           child: _buildGridItem(x, y),
