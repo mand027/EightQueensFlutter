@@ -1,3 +1,5 @@
+import 'package:eight_queens/DataManager.dart';
+import 'package:eight_queens/results.dart';
 import 'package:flutter/material.dart';
 
 
@@ -14,6 +16,7 @@ class _ProblemSolverState extends State<ProblemSolver> {
 
   _ProblemSolverState({ required this.N});
 
+  DataManager dataManager = new DataManager();
   int N;
   var board;
   var ld = new List.filled(100, 0, growable: false);
@@ -29,18 +32,10 @@ class _ProblemSolverState extends State<ProblemSolver> {
     SolveQueensStart();
   }
 
-  void printSolution(board)
+  void saveSolution(board)
   {
-    var auxoneDBoard = List.filled(N*N, 0, growable: false);
-    for (int i = 0; i < N; i++)
-    {
-      for (int j = 0; j < N; j++) {
-        auxoneDBoard[i] = board[i][j];
-      }
-    }
-    setState(() {
-      print(board);
-    });
+    var result = Results(N: N, resultArray: board);
+    dataManager.writeContent(result);
   }
 
   /* Queens Solution based on code by Princi Singh in https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/ */
@@ -51,7 +46,7 @@ class _ProblemSolverState extends State<ProblemSolver> {
       print("Solution does not exist");
     }
     else{
-      printSolution(board);
+      saveSolution(board);
     }
   }
 

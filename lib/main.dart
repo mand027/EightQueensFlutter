@@ -1,6 +1,9 @@
 import 'package:eight_queens/ProblamSolver.dart';
 import 'package:flutter/material.dart';
 
+import 'DataManager.dart';
+import 'PastResults.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -10,11 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: '8 queens problem',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Home Page'),
     );
   }
 }
@@ -30,7 +33,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  int boardSize = 4;
+  int boardSize = 8;
+  var history = "";
 
   void IncrementCounter() {
     setState(() {
@@ -49,6 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
+    DataManager dataManager = new DataManager();
+
     return Scaffold(
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
@@ -61,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: Center(
                 child:
-                Text("8 Queens"), //cambiar por logo nuev
+                Text("N Queens"),
               ),
             ),
             Expanded(flex: 1, child: SizedBox(),),
@@ -89,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 100.0,
                 child: ElevatedButton(
                   child: Icon(
-                      Icons.exposure_minus_1
+                      Icons.remove
                   ),
                   onPressed: ()  async {
                     DecreaseCounter();
@@ -98,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(width: 10),
               Text(
-                  boardSize.toString() + "",
+                boardSize.toString(),
                 style: TextStyle(fontSize: 22),
                 textAlign: TextAlign.center,
               ),
@@ -108,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 100.0,
                 child: ElevatedButton(
                   child: Icon(
-                      Icons.plus_one
+                      Icons.add
                   ),
                   onPressed: ()  async {
                     IncrementCounter();
@@ -148,7 +154,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   textAlign: TextAlign.center,
                 ),
                 onPressed: ()  async {
-
+                  history = await dataManager.readcontent();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PastResults(content: history)
+                      )
+                  );
                 },
               )
           )
