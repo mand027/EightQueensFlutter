@@ -67,14 +67,12 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Expanded(flex: 1, child: SizedBox(),),
             Expanded(
               child: Center(
                 child:
-                Text("N Queens"),
+                Text("N Queens Solver"),
               ),
             ),
-            Expanded(flex: 1, child: SizedBox(),),
           ],
         ),
         automaticallyImplyLeading: false,
@@ -84,6 +82,19 @@ class _MyHomePageState extends State<MyHomePage> {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                    width: 300,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset('assets/images/chess.jpg')
+                      )
+                  ),
+              ]
+          ),
+          SizedBox(height: 50),
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
