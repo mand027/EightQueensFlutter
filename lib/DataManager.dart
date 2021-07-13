@@ -15,17 +15,18 @@ class DataManager {
     return File('$path/data.txt');
   }
 
-  Future<String> readcontent() async {
+  Future<List<Results>?> readcontent() async {
     try {
       final file = await _localFile;
       // Read the file
       String contents = await file.readAsString();
 
       //print(contents.toString());
-      return contents;
+      var resultList = TextToData(contents);
+      return resultList;
     } catch (e) {
       // If there is an error reading, return a default String
-      return 'Error';
+      return null;
     }
   }
 
@@ -39,4 +40,36 @@ class DataManager {
     String addThis = contents + newItem;
     return file.writeAsString(addThis);
   }
+
+
+  List<Results> TextToData(String content){
+
+    List<Results> lista = List<Results>.empty(growable: true);
+    Results R;
+    List resultArray;
+
+    var dividedObjects = content.split('-');
+    dividedObjects.removeLast();
+
+    for (int i = 0; i < dividedObjects.length; i++) {
+      var dividedIndividualEntry = dividedObjects[i].split(":");
+      var N = int.parse(dividedIndividualEntry[0]);
+      resultArray = List.generate(N, (i) => List.filled(N, 0, growable: false), growable: false);
+      final iReg = RegExp(r'(\d+)');
+      var test = iReg.allMatches(dividedIndividualEntry[1]).map((m) => m.group(0)).join(' ');
+      var nums = test.split(" ");
+      int c = 0;
+      for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+          resultArray[i][j] = int.parse(nums[c]);
+          c++;
+        }
+      }
+      R = Results(N: N, resultArray: resultArray);
+      //print("res: " +R.N.toString() + ": "+ R.resultArray.toString());
+      lista.add(R);
+    }
+    return lista;
+  }
+
 }

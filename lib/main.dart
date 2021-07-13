@@ -1,8 +1,12 @@
 import 'package:eight_queens/ProblamSolver.dart';
+import 'package:eight_queens/results.dart';
 import 'package:flutter/material.dart';
 
 import 'DataManager.dart';
 import 'PastResults.dart';
+
+
+//travis CI help https://dev.to/ameysunu/travis-ci-for-flutter-apps-1ngj
 
 void main() {
   runApp(MyApp());
@@ -34,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   int boardSize = 8;
-  var history = "";
+  var history = List<Results>.empty(growable: true);
 
   void IncrementCounter() {
     setState(() {
@@ -154,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   textAlign: TextAlign.center,
                 ),
                 onPressed: ()  async {
-                  history = await dataManager.readcontent();
+                  history = (await dataManager.readcontent())!;
                   Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 
 class PastResults extends StatefulWidget {
-  String content;
+  List<Results> content;
 
   PastResults({required this.content});
 
@@ -16,48 +16,16 @@ class _PastResultsState extends State<PastResults> {
 
   _PastResultsState({ required this.content});
 
-  String content;
-  List<Results>? lista;
+  List<Results> content;
 
   @override
   void initState() {
     super.initState();
-    lista = fixData();
-  }
-
-  List<Results> fixData(){
-
-    List<Results> lista = List<Results>.empty(growable: true);
-    Results R;
-    List resultArray;
-
-    var dividedObjects = content.split('-');
-    dividedObjects.removeLast();
-
-    for (int i = 0; i < dividedObjects.length; i++) {
-      var dividedIndividualEntry = dividedObjects[i].split(":");
-      var N = int.parse(dividedIndividualEntry[0]);
-      resultArray = List.generate(N, (i) => List.filled(N, 0, growable: false), growable: false);
-      final iReg = RegExp(r'(\d+)');
-      var test = iReg.allMatches(dividedIndividualEntry[1]).map((m) => m.group(0)).join(' ');
-      var nums = test.split(" ");
-      int c = 0;
-      for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-          resultArray[i][j] = int.parse(nums[c]);
-          c++;
-        }
-      }
-      R = Results(N: N, resultArray: resultArray);
-      print("res: " +R.N.toString() + ": "+ R.resultArray.toString());
-      lista.add(R);
-    }
-    return lista;
   }
 
   @override
   Widget build(BuildContext context) {
-    lista = lista;
+    content = content;
     return Scaffold(
         appBar: AppBar(
             iconTheme: IconThemeData(color: Colors.white),
@@ -80,9 +48,9 @@ class _PastResultsState extends State<PastResults> {
             child: Scaffold(
                 body: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: lista?.length,
+                  itemCount: content?.length,
                   itemBuilder: (context, index){
-                    return HistoryCard(lista![index]);
+                    return HistoryCard(content![index]);
                   },
                 )
             )
