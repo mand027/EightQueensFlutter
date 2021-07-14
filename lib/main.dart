@@ -1,7 +1,6 @@
 import 'package:eight_queens/ProblamSolver.dart';
 import 'package:eight_queens/results.dart';
 import 'package:flutter/material.dart';
-
 import 'DataManager.dart';
 import 'PastResults.dart';
 
@@ -169,13 +168,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   textAlign: TextAlign.center,
                 ),
                 onPressed: ()  async {
-                  history = (await dataManager.readcontent())!;
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PastResults(content: history)
-                      )
-                  );
+                  history = (await dataManager.readcontent())! ;
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PastResults(content: history)));
                 },
               )
           )
