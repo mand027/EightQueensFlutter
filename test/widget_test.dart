@@ -39,17 +39,4 @@ void main() {
     expect(find.text('8'), findsNothing);
     expect(find.text('7'), findsOneWidget);
   });
-
-  testWidgets("test decrease N", (WidgetTester tester) async {
-    await tester.pumpWidget(ProblemSolver(N: 4));
-
-    expect(find.text('Solution: 1/2'), findsOneWidget);
-    expect(find.text('Solution: 1/2'), findsNothing);
-
-    await tester.tap(find.byIcon(Icons.remove));
-    await tester.pump();
-
-    expect(find.text('Solution: 1/2'), findsNothing);
-    expect(find.text('Solution: 1/2'), findsOneWidget);
-  });
 }
