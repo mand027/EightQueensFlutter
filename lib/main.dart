@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                    width: 300,
+                    width: 200,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Image.asset('assets/images/chess.jpg')
