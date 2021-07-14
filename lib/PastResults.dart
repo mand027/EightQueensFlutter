@@ -48,9 +48,9 @@ class _PastResultsState extends State<PastResults> {
             child: Scaffold(
                 body: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: content?.length,
+                  itemCount: content.length,
                   itemBuilder: (context, index){
-                    return HistoryCard(content![index]);
+                    return HistoryCard(content[index]);
                   },
                 )
             )
