@@ -5,6 +5,8 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:eight_queens/PastBoard.dart';
+import 'package:eight_queens/ProblamSolver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -36,5 +38,18 @@ void main() {
 
     expect(find.text('8'), findsNothing);
     expect(find.text('7'), findsOneWidget);
+  });
+
+  testWidgets("test decrease N", (WidgetTester tester) async {
+    await tester.pumpWidget(ProblemSolver(N: 4));
+
+    expect(find.text('Solution: 1/2'), findsOneWidget);
+    expect(find.text('Solution: 1/2'), findsNothing);
+
+    await tester.tap(find.byIcon(Icons.remove));
+    await tester.pump();
+
+    expect(find.text('Solution: 1/2'), findsNothing);
+    expect(find.text('Solution: 1/2'), findsOneWidget);
   });
 }
