@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:eight_queens/results.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DataManager {
@@ -21,7 +22,6 @@ class DataManager {
       // Read the file
       String contents = await file.readAsString();
 
-      //print(contents.toString());
       var resultList = TextToData(contents);
       return resultList;
     } catch (e) {
@@ -31,8 +31,6 @@ class DataManager {
   }
 
   Future<File> writeContent(Results result) async {
-
-    Map<String, dynamic> content = new Map();
 
     final file = await _localFile;
     String contents = await file.readAsString();
@@ -48,23 +46,31 @@ class DataManager {
     Results R;
     List resultArray;
 
+
     var dividedObjects = content.split('-');
     dividedObjects.removeLast();
+    //print(dividedObjects);
 
     for (int i = 0; i < dividedObjects.length; i++) {
       var dividedIndividualEntry = dividedObjects[i].split(":");
       var N = int.parse(dividedIndividualEntry[0]);
-      resultArray = List.generate(N, (i) => List.filled(N, 0, growable: false), growable: false);
+      resultArray = List.empty(growable: true);
+      List auxresultArray = List.filled(N, 0);
       final iReg = RegExp(r'(\d+)');
       var test = iReg.allMatches(dividedIndividualEntry[1]).map((m) => m.group(0)).join(' ');
       var nums = test.split(" ");
+      //print(nums);
+      //print((nums.length/N).toString());
       int c = 0;
-      for (int i = 0; i < N; i++) {
+      for (int i = 0; i <= (nums.length/N) -1; i++) {
+        auxresultArray = List.generate(N, (index) => 0);
         for (int j = 0; j < N; j++) {
-          resultArray[i][j] = int.parse(nums[c]);
+          auxresultArray[j] = int.parse(nums[c]);
           c++;
         }
+        resultArray.add(auxresultArray);
       }
+      //print(resultArray);
       R = Results(N: N, resultArray: resultArray);
       //print("res: " +R.N.toString() + ": "+ R.resultArray.toString());
       lista.add(R);

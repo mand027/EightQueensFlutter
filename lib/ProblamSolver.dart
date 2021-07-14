@@ -46,8 +46,8 @@ class _ProblemSolverState extends State<ProblemSolver> {
   void saveSolution()
   {
     print("saving:" + solutions.toString());
-    // result = Results(N: N, resultArray: solutions);
-    //dataManager.writeContent(result);
+    Results Saved = Results(N: N, resultArray: solutions);
+    dataManager.writeContent(Saved);
   }
 
   /* This code (HERE and down) was adapted to dart based on code by PrinciRaj1992 from: https://www.geeksforgeeks.org/printing-solutions-n-queen-problem*/

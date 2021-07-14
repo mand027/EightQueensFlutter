@@ -19,14 +19,31 @@ class _PastBoardState extends State<PastBoard> {
   DataManager dataManager = new DataManager();
   Results? R;
   int N = 0;
+  var selectedBoard = 0;
   var board;
+  var solutions;
 
   @override
   void initState() {
     super.initState();
 
     N = R!.N;
-    board = R?.resultArray;
+    solutions = R?.resultArray;
+    board = List.generate(N, (i) => List.filled(N, 0, growable: false), growable: false);
+    fillCurrentQueens();
+  }
+
+  void fillCurrentQueens(){
+    board = List.generate(N, (i) => List.filled(N, 0, growable: false), growable: false);
+
+    var currentSols = solutions[selectedBoard];
+    for(var i = 0; i< N; i++){
+      for(var j = 0; j< currentSols[i]; j++){
+        if(j == (currentSols[i] - 1)){
+          board[i][j] = 1;
+        }
+      }
+    }
   }
 
   @override
@@ -67,6 +84,54 @@ class _PastBoardState extends State<PastBoard> {
                     itemCount: N * N,
                   ),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ButtonTheme(
+                    minWidth: 150.0,
+                    height: 100.0,
+                    child: ElevatedButton(
+                      child: Icon(
+                          Icons.remove
+                      ),
+                      onPressed: ()  async {
+                        setState(() {
+                          selectedBoard--;
+                          if(selectedBoard <= 0 ){
+                            selectedBoard = 0;
+                          }
+                          fillCurrentQueens();
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    "Solution: "+(selectedBoard +1).toString()+"/"+(solutions.length).toString(),
+                    style: TextStyle(fontSize: 22),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(width: 10),
+                  ButtonTheme(
+                    minWidth: 150.0,
+                    height: 100.0,
+                    child: ElevatedButton(
+                      child: Icon(
+                          Icons.add
+                      ),
+                      onPressed: ()  async {
+                        setState(() {
+                          selectedBoard++;
+                          if(selectedBoard >= solutions.length -1){
+                            selectedBoard = solutions.length -1;
+                          }
+                          fillCurrentQueens();
+                        });
+                      },
+                    ),
+                  )
+                ],
               ),
             ])
     );
