@@ -7,7 +7,6 @@ import 'package:path_provider/path_provider.dart';
 class DataManager {
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
-
     return directory.path;
   }
 
@@ -33,6 +32,7 @@ class DataManager {
   Future<File> writeContent(Results result) async {
 
     final file = await _localFile;
+    file.create();
     String contents = await file.readAsString();
     String newItem = result.N.toString() + ":" + result.resultArray.toString() + "-";
     String addThis = contents + newItem;
