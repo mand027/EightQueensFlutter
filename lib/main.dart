@@ -35,6 +35,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  DataManager dataManager = new DataManager();
+  @override
+  void initState() {
+    super.initState();
+    dataManager.createFile();
+  }
 
   int boardSize = 8;
   var history = List<Results>.empty(growable: true);

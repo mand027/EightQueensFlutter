@@ -12,7 +12,14 @@ class DataManager {
 
   Future<File> get _localFile async {
     final path = await _localPath;
-    return File('$path/data.txt');
+    final file = File('$path/data.txt');
+    return file;
+  }
+
+  void createFile() async{
+    final path = await _localPath;
+    final file = File('$path/data.txt');
+    file.create();
   }
 
   Future<List<Results>?> readcontent() async {
@@ -32,7 +39,6 @@ class DataManager {
   Future<File> writeContent(Results result) async {
 
     final file = await _localFile;
-    file.create();
     String contents = await file.readAsString();
     String newItem = result.N.toString() + ":" + result.resultArray.toString() + "-";
     String addThis = contents + newItem;
@@ -49,6 +55,7 @@ class DataManager {
 
     var dividedObjects = content.split('-');
     dividedObjects.removeLast();
+
     //print(dividedObjects);
 
     for (int i = 0; i < dividedObjects.length; i++) {
